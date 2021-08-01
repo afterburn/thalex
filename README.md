@@ -7,7 +7,7 @@ Create a simplified cryptocurrency exchange order entry form and order book.
 ## Preface
 
 Due to my inexperience with regard to trading I might have made some mistakes in some of the calculations.
-I want to emphasize that this is something I will take a deep dive into if I am hired.
+I want to emphasize that this is something I will take a deep dive into if I am hired. Due to time restraints I could not implement everything I wanted to, so I've added a list of improvements to describe what that would look like.
 
 ## Installation
 
