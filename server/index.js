@@ -6,7 +6,7 @@ const PORT = 8080;
 const ORDER_BOOK_SIZE = 1000;
 const ORDER_BOOK_SIZE_BURST = 100;
 const ORDER_PROCESS_INTERVAL = 35;
-const BROADCAST_INTERVAL = 1000;
+const BROADCAST_INTERVAL = 500;
 
 // List of orders in order of insertions.
 // Each order is an object with the following properties:

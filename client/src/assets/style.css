@@ -1,0 +1,266 @@
+.field input {
+  width: 100%;
+}
+
+button.confirm {
+  color: #ffffff;
+  background-color: var(--green);
+}
+
+button.confirm:hover {
+  background-color: var(--greenHover);
+}
+
+button.warn {
+  color: #ffffff;
+  background-color: var(--red);
+}
+
+button.warn:hover {
+  background-color: var(--redHover);
+}
+
+form .field {
+  padding: 8px;
+}
+
+#root {
+  padding: 40px;
+  display: flex;
+  height: 100vh;
+  align-items: flex-start;
+}
+
+.app {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  border: 1px solid var(--accent);
+  border-radius: var(--borderRadius);
+  overflow: hidden;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+  background-color: var(--appBackground);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  height: 40px;
+  border-bottom: 1px solid var(--accent);
+}
+
+.app-header .app-header-left,
+.app-header .app-header-right {
+  width: 25%;
+}
+
+.app-header .app-header-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.app-header .app-header-left span {
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+
+.app-header .app-header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.app-header .theme .theme-button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  margin-left: 4px;
+  border: 4px solid var(--accent);
+}
+
+.app-header .theme .theme-button:hover {
+  border: 4px solid orange;
+}
+
+.app-header .theme .theme-button.light {
+  background-color: #fff;
+}
+
+.app-header .theme .theme-button.dark {
+  background-color: #333;
+}
+
+.app .app-content {
+  width: calc(100vw - 80px);
+  height: calc(100% - 40px);
+  display: flex;
+}
+
+.order-book {
+  border-left: 1px solid var(--accent);
+}
+
+.order-book,
+.app-content-left {
+  width: 50%;
+  background-color: var(--appBackground);
+}
+
+.order-book .mark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  padding-right: var(--padding);
+  border-top: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+
+.order-book .mark select {
+  height: 30px;
+  border-radius: 0;
+  border: 0;
+  border-right: 1px solid var(--accent);
+}
+
+.order-book .mark select option {
+  background-color: var(--appBackground);
+}
+
+.order-book .orders {
+  width: 100%;
+  height: calc(50% - 15px);
+}
+
+.order-book .orders .header,
+.order-form .header {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--accent);
+}
+
+.order-form .header {
+  border-top: 1px solid var(--accent);
+}
+
+.order-book .orders .items {
+  height: calc(100% - 50px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.order-book .orders .items::-webkit-scrollbar {
+  width: var(--scrollBarWidth);
+}
+
+.order-book .orders .items::-webkit-scrollbar-track {
+  background: var(--accent);
+}
+
+.order-book .orders .items::-webkit-scrollbar-thumb {
+  background: var(--darken3);
+  border-radius: var(--borderRadius);
+}
+
+.order-book .orders .items::-webkit-scrollbar-thumb:hover {
+  background: var(--darken4);
+}
+
+.order-book .orders .items-header {
+  padding-right: var(--scrollBarWidth);
+  border-bottom: 1px solid var(--accent);
+}
+
+.order-book .orders .items-header,
+.order-book .orders .items .order {
+  height: var(--cellHeight);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.order-book .orders .items .order:nth-child(odd) {
+  background-color: var(--accent);
+}
+
+.order-book .orders .items .order:last-of-type {
+  border-bottom: 0;
+}
+
+.order-book .orders .items-header span,
+.order-book .orders .items .order span {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  padding-right: var(--padding);
+  align-items: center;
+  justify-content: flex-end;
+  border-right: 1px solid var(--accent);
+}
+
+.order-book .orders .items-header span:last-of-type,
+.order-book .orders .items .order span:last-of-type {
+  border-right: 0;
+}
+
+.order-book .orders.sell .items .order span.price {
+  color: var(--red);
+}
+
+.order-book .orders.buy .items .order span.price {
+  color: var(--green);
+}
+
+.order-form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-form .buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.depth-chart {
+  width: 100%;
+  height: calc(50% - 15px);
+}
+
+.toggle {
+  width: 40px;
+  height: 20px;
+  padding: 4px;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: var(--darken4);
+  transition: background-color 0.2s ease-in-out;
+  user-select: none;
+}
+
+.toggle.toggled {
+  background-color: var(--green);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.toggle > div {
+  width: 12px;
+  height: 100%;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.toggle.toggled > div {
+  transform: translate3d(20px, 0, 0);
+  transition: transform 0.2s ease-in-out;
+}

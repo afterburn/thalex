@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -w",
-    "serve": "nodemon server"
+    "build": "webpack",
+    "build-hot": "webpack -w",
+    "serve": "node server",
+    "serve-hot": "nodemon server",
+    "start": "concurrently \"npm run build-hot\" \"npm run serve-hot\""
   },
   "keywords": [],
   "author": "",
@@ -22,6 +25,8 @@
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
+    "concurrently": "^6.2.0",
+    "copy-webpack-plugin": "^9.0.1",
     "html-webpack-plugin": "^5.3.2",
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2"

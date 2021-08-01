@@ -1,80 +1,42 @@
 import React from 'react'
 import OrderContext from '../context/OrderContext'
 
-const onlyUnique = (value, index, self) => {
-  return self.indexOf(value) === index
-}
+import Select, { Option } from './core/Select'
 
-const formatPrice = (price) => {
-  return Math.round(price).toLocaleString()
-}
+import sort from '../utils/sort'
+import calculateSize from '../utils/calculate-size'
+import calculateTotalSize from '../utils/calculate-total-size'
+import formatPrice from '../utils/format-price'
 
-const getSize = (orders) => {
-  return orders.reduce((acc, val) => {
-    return acc + val.price * val.amount
-  }, 0)
-}
-
-const getTotalSize = (_orders) => {
-  let total = 0
-  return _orders.map(([price, orders]) => {
-    total += getSize(orders)
-    return total
-  })
-}
-
-const map = (orders) => {
-  const result = {}
-  orders
-    .map(order => formatPrice(order.price))
-    .filter(onlyUnique).forEach(price => {
-      result[price] = orders.filter(order => {
-        return formatPrice(order.price) === price
-      })
-    })
-  return result
-}
 const OrderBook = () => {
-  const { buyOrders, sellOrders, mark } = React.useContext(OrderContext)
-  const _buyOrders = Object.entries(map(buyOrders)).sort(([a], [b]) => {
-    if (a > b) return -1
-    else if (a < b) return 1
-    return 0
-  })
+  const { mappedBuyOrders, mappedSellOrders, mark, setLimitOrderPrice, priceGrouping, setPriceGrouping } = React.useContext(OrderContext)
 
-  const _sellOrders = Object.entries(map(sellOrders)).sort(([a], [b]) => {
-    if (a > b) return -1
-    else if (a < b) return 1
-    return 0
-  })
+  const handleChangePriceGrouping = (e) => {
+    // Change the price grouping.
+    const value = Number(e.target.value)
+    setPriceGrouping(value)
 
-  const _buyTotals = getTotalSize(_buyOrders)
-  const _sellTotals = getTotalSize(_sellOrders)
+    // Store price grouping preference in localStorage.
+    localStorage.setItem('priceGrouping', value)
+  }
+
+  React.useEffect(() => {
+    // Check if the user has a price grouping preference and apply it.
+    const pg = localStorage.getItem('priceGrouping')
+    if (pg || pg === 0) {
+      setPriceGrouping(Number(pg))
+    }
+  }, [])
+
+  // Sort the buy and sell orders.
+  const _buyOrders = Object.entries(mappedBuyOrders).sort(sort)
+  const _sellOrders = Object.entries(mappedSellOrders).sort(sort)
+
+  // Calculate buy and sell order totals.
+  const buyTotals = calculateTotalSize(_buyOrders)
+  const sellTotals = calculateTotalSize(_sellOrders)
 
   return <div className='order-book'>
-    <div className='orders buy'>
-      <div className='header'>Buy orders</div>
-      <div className='items-header'>
-        <span>Price</span>
-        <span>Size</span>
-        <span>Total</span>
-      </div>
-      <div className='items'>
-        {_buyOrders.map(([price, orders], i) => {
-            const size = getSize(orders)
-            const total = _buyTotals[i]
-            return <div className='order' key={i}>
-              <span className='price'>{price}</span>
-              <span>{formatPrice(size)}</span>
-              <span>{formatPrice(total)}</span>
-            </div>
-          })
-        }
-      </div>
-    </div>
-    <div className='mark'>
-      <span>Mark: {formatPrice(mark)}</span>
-    </div>
     <div className='orders sell'>
       <div className='header'>Sell orders</div>
       <div className='items-header'>
@@ -84,10 +46,42 @@ const OrderBook = () => {
       </div>
       <div className='items'>
         {_sellOrders.map(([price, orders], i) => {
-            const size = getSize(orders)
-            const total = _sellTotals[i]
-            return <div className='order' key={i}>
-              <span className='price'>{price}</span>
+            const size = calculateSize(orders)
+            const total = sellTotals[i]
+            return <div className='order' key={i} onClick={() => setLimitOrderPrice(Math.round(price))}>
+              <span className='price'>{formatPrice(price)}</span>
+              <span>{formatPrice(size)}</span>
+              <span>{formatPrice(total)}</span>
+            </div>
+          })
+        }
+      </div>
+    </div>
+    <div className='mark'>
+      <Select onChange={handleChangePriceGrouping} value={priceGrouping}>
+        <Option value={0}>⛔</Option>
+        <Option value={1}>1</Option>
+        <Option value={2}>2</Option>
+        <Option value={5}>5</Option>
+        <Option value={10}>10</Option>
+        <Option value={50}>50</Option>
+        <Option value={100}>100</Option>
+      </Select>
+      <span>Mark: {formatPrice(mark)}</span>
+    </div>
+    <div className='orders buy'>
+      <div className='header'>Buy orders</div>
+      <div className='items-header'>
+        <span>Price</span>
+        <span>Size</span>
+        <span>Total</span>
+      </div>
+      <div className='items'>
+        {_buyOrders.map(([price, orders], i) => {
+            const size = calculateSize(orders)
+            const total = buyTotals[i]
+            return <div className='order' key={i} onClick={() => setLimitOrderPrice(price)}>
+              <span className='price'>{formatPrice(price)}</span>
               <span>{formatPrice(size)}</span>
               <span>{formatPrice(total)}</span>
             </div>
