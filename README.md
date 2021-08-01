@@ -18,7 +18,7 @@ I want to emphasize that this is something I will take a deep dive into if I am 
 ## Usage
 
 ```shell
-  npm start (wait until webpack build is finished before visiting url)
+  npm start (wait until webpack build is finished before visiting http://localhost:8080)
 ```
 
 ## Improvements
